@@ -40,6 +40,10 @@
     visibility: hidden;
     transform: scaleX(0);
     the-transition();
+
+    +mobile() {
+      display: none;
+    }
   }
 
   &:hover::before {
