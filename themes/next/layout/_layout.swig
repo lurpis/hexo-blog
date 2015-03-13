@@ -79,6 +79,11 @@
         $(".sidebar-toggle").fadeIn();
         $(".back-to-top").fadeIn();
       })
+      if(isMobile()){
+        $(".nav-link").click(function(){
+            sidebarHideMotion();
+        });
+      }
       var body = $('body');
       var isSidebarVisible = false;
       var sidebarToggle = $('.sidebar-toggle');
@@ -122,7 +127,10 @@
 
       function sidebarShowMotion () {
         var sidebarDisplayDuration = 300;
-        var sidebarWidth = '320px';
+        if(isMobile())
+          var sidebarWidth = '100%';
+        else
+          var sidebarWidth = '320px';
 
         sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
         sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);

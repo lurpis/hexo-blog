@@ -7,15 +7,11 @@
   padding: 5px;
   background: $colorDeepBlack;
   line-height: 0;
-  z-index: 3;
+  z-index: 10;
   cursor: pointer;
   -webkit-transform: translateZ(0);
-
-  +tablet() {
-    display: none;
-  }
   +mobile() {
-    display: none;
+    right:15px;
   }
 }
 
@@ -24,8 +20,8 @@
 }
 
 .ercode img{
-  width: 65%; 
-  padding: 15px 53px;
+  width: 195px; 
+  margin:15px auto;
 }
 
 .sidebar-toggle-line {
@@ -45,6 +41,7 @@
 .sidebar {
   width: 0;
   position: fixed;
+  z-index:9;
   right: 0;
   top: 0;
   bottom: 0;
@@ -178,6 +175,11 @@
   &:hover {
     color: $colorWhiteSmoke;
   }
+
+  +mobile() {
+    width:60px;
+  }
+  
 }
 .page-post-detail .sidebar-nav-toc {
   margin-left: 10px;
