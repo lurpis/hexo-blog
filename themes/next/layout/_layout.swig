@@ -159,17 +159,19 @@
           isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
           isSidebarVisible = !isSidebarVisible;
         });
-        sidebarToggle.hover(function () {
-          if (isSidebarVisible) {return}
-          sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
-          sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
-          sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
-        }, function () {
-          if (isSidebarVisible) {return}
-          sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
-          sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
-          sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
-        });
+        if(isDesktop()){
+          sidebarToggle.hover(function () {
+            if (isSidebarVisible) {return}
+            sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+            sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+            sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+          }, function () {
+            if (isSidebarVisible) {return}
+            sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+            sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+            sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+          });
+        }
       }
     });
 
