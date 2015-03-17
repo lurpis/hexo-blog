@@ -1,0 +1,7 @@
+User-Agent: *
+Sitemap: http://lurrpis.com/sitemap.xml
+Disallow: /404/index.html
+Disallow: /tags
+Disallow: /page
+Disallow: /categories
+Disallow: /archives
