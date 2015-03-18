@@ -69,16 +69,21 @@
   {% endif %}
 
   <script type="text/javascript">
-    $(document).ready(function () {   
-      $("#wechat").hover(function(){
-        $(".ercode").filter(':not(:animated)').fadeIn();
-        $(".sidebar-toggle").filter(':not(:animated)').fadeOut();
-        $(".back-to-top").filter(':not(:animated)').fadeOut();
-      },function(){
-        $(".ercode").fadeOut();
-        $(".sidebar-toggle").fadeIn();
-        $(".back-to-top").fadeIn();
-      })
+    $(document).ready(function () {
+      if(isDesktop()){ 
+        $("#wechat").hover(function(){
+          $(".ercode").filter(':not(:animated)').fadeIn();
+          $(".sidebar-toggle").filter(':not(:animated)').fadeOut();
+          $(".back-to-top").filter(':not(:animated)').fadeOut();
+        },function(){
+          $(".ercode").fadeOut();
+          $(".sidebar-toggle").fadeIn();
+          $(".back-to-top").fadeIn();
+        })
+      }else{
+        $("#wechat").html("<i class='fa fa-qq'></i> Online");
+        $("#wechat").attr('href','http://wpa.qq.com/msgrd?v=3&uin=28568090&site=lurrpis.com&menu=yes');
+      }
       if(isMobile()){
         $(".nav-link").click(function(){
             sidebarHideMotion();

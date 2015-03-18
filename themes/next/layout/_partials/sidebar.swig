@@ -46,7 +46,7 @@
               <a href="http://weibo.com/lurrpis" target="_blank"><i class="fa fa-weibo"></i> WeiBo</a>
             </span>
             <span class="soclial-item">
-              <a href="javascript:void(0)" id="wechat"><i class="fa fa-weixin"></i> WeChat</a>
+              <a href="javascript:void(0)" target="_blank" id="wechat"><i class="fa fa-weixin"></i> WeChat</a>
             </span>
             <div class="div-email">
               <span class="soclial-item">
