@@ -5,7 +5,7 @@
   <i class="fa fa-cogs fa-spin"></i>  powered by <a href="http://hexo.io" target="_blank" class="theme-link">Hexo</a> at next
     <div class="footer_icon">
         <a href="http://www.qiniu.com/" class="hvr-buzz-out" target="_blank"><i class="fa fa-html5"></i></a>
-        <a href="http://www.jiasule.com/" class="hvr-buzz-out" target="_blank"><i class="fa fa-rocket"></i></a>
+        <a href="http://cdn.console.aliyun.com/" class="hvr-buzz-out" target="_blank"><i class="fa fa-rocket"></i></a>
     <a href="http://www.aliyun.com/" class="hvr-buzz-out" target="_blank"><i class="fa fa-skyatlas"></i></a>
     </div>
 </div>

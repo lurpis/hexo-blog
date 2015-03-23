@@ -60,9 +60,19 @@
     </div>
 
     {% if is_post() %}
-      <div class="post-toc sidebar-panel-active">
-        {{ toc(page.content, {"class": "nav"}) }}
+      <div class="post-toc-wrap sidebar-panel-active">
+        <div class="post-toc-indicator-top post-toc-indicator"></div>
+        <div class="post-toc">
+          {% set toc = toc(page.content, {"class": "nav", list_number: theme.toc_list_number}) %}
+          {% if toc.length === 0 %}
+            <p class="post-toc-empty">{{ __('post.toc_empty') }}</p>
+          {% else %}
+            <div class="post-toc-content">{{ toc }}</div>
+          {% endif %}
+        </div>
+        <div class="post-toc-indicator-bottom post-toc-indicator"></div>
       </div>
     {% endif %}
+    
   </div>
 </div>
