@@ -1,0 +1,342 @@
+{% extends '_layout.swig' %}
+{% import '_macro/post.swig' as render %}
+
+{% block title %} {{ page.title + ' - ' + config.title }} {% endblock %}
+
+{% block page_class %}page-post-detail{% endblock %}
+
+{% block content %}
+  {{ render.post(page) }}
+
+  {% if page.comments %}
+    <div class="comments" id="comments">
+        <div class="ds-thread" data-thread-key="{{ page.path }}" data-title="{{ page.title }}" data-url="{{ page.permalink }}">
+        </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
+
+{% block script_extra %}
+  <script type="text/javascript" id="helpers.escapeSelector">
+    function escapeSelector (selector) {
+      return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+    }
+  </script>
+
+  {% if theme.use_motion %}
+    <script type="text/javascript" id="post-details-motion">
+      $(document).ready(function () {
+        var html = $('html');
+
+        $('.sidebar-nav li').on('click', function () {
+          var item = $(this);
+          var activeTabClassName = 'sidebar-nav-active';
+          var activePanelClassName = 'sidebar-panel-active';
+          if (item.hasClass(activeTabClassName)) {
+            return;
+          }
+
+          var currentTarget = $('.' + activePanelClassName);
+          var target = $('.' + item.data('target'));
+
+          currentTarget.velocity('transition.slideUpOut', 200, function () {
+            target
+              .velocity('stop')
+              .velocity('transition.slideDownIn', 200)
+              .addClass(activePanelClassName);
+          });
+
+          item.siblings().removeClass(activeTabClassName);
+          item.addClass(activeTabClassName);
+        });
+
+        $('.post-toc a,.tocomments').on('click', function (e) {
+          e.preventDefault();
+          var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+          html.velocity('stop').velocity('scroll', {
+            offset: offset  + 'px',
+            mobileHA: false
+          });
+        });
+
+        // Expand sidebar on post detail page by default, when post has a toc.
+        var $tocContent = $('.post-toc-content');
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0 && isDesktop()) {
+        setTimeout(function () {
+          $('.sidebar-toggle').trigger('click');
+        }, 800);
+      }
+      });
+    </script>
+  {% endif %}
+
+  <script type="text/javascript" id="bootstrap.scrollspy">
+    /* ========================================================================
+    * Bootstrap: scrollspy.js v3.3.2
+    * http://getbootstrap.com/javascript/#scrollspy
+    * ========================================================================
+    * Copyright 2011-2015 Twitter, Inc.
+    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+    * ======================================================================== */
+
+
+    +function ($) {
+      'use strict';
+
+      // SCROLLSPY CLASS DEFINITION
+      // ==========================
+
+      function ScrollSpy(element, options) {
+        this.$body          = $(document.body)
+        this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+        this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+        this.selector       = (this.options.target || '') + ' .nav li > a'
+        this.offsets        = []
+        this.targets        = []
+        this.activeTarget   = null
+        this.scrollHeight   = 0
+
+        this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+        this.refresh()
+        this.process()
+      }
+
+      ScrollSpy.VERSION  = '3.3.2'
+
+      ScrollSpy.DEFAULTS = {
+        offset: 10
+      }
+
+      ScrollSpy.prototype.getScrollHeight = function () {
+        return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+      }
+
+      ScrollSpy.prototype.refresh = function () {
+        var that          = this
+        var offsetMethod  = 'offset'
+        var offsetBase    = 0
+
+        this.offsets      = []
+        this.targets      = []
+        this.scrollHeight = this.getScrollHeight()
+
+        if (!$.isWindow(this.$scrollElement[0])) {
+          offsetMethod = 'position'
+          offsetBase   = this.$scrollElement.scrollTop()
+        }
+
+        this.$body
+          .find(this.selector)
+          .map(function () {
+            var $el   = $(this)
+            var href  = $el.data('target') || $el.attr('href')
+            var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+            return ($href
+              && $href.length
+              && $href.is(':visible')
+              && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+          })
+          .sort(function (a, b) { return a[0] - b[0] })
+          .each(function () {
+            that.offsets.push(this[0])
+            that.targets.push(this[1])
+          })
+
+
+      }
+
+      ScrollSpy.prototype.process = function () {
+        var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+        var scrollHeight = this.getScrollHeight()
+        var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+        var offsets      = this.offsets
+        var targets      = this.targets
+        var activeTarget = this.activeTarget
+        var i
+
+        if (this.scrollHeight != scrollHeight) {
+          this.refresh()
+        }
+
+        if (scrollTop >= maxScroll) {
+          return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+        }
+
+        if (activeTarget && scrollTop < offsets[0]) {
+          this.activeTarget = null
+          return this.clear()
+        }
+
+        for (i = offsets.length; i--;) {
+          activeTarget != targets[i]
+            && scrollTop >= offsets[i]
+            && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+            && this.activate(targets[i])
+        }
+      }
+
+      ScrollSpy.prototype.activate = function (target) {
+        this.activeTarget = target
+
+        this.clear()
+
+        var selector = this.selector +
+          '[data-target="' + target + '"],' +
+          this.selector + '[href="' + target + '"]'
+
+        var active = $(selector)
+          .parents('li')
+          .addClass('active')
+
+        if (active.parent('.dropdown-menu').length) {
+          active = active
+            .closest('li.dropdown')
+            .addClass('active')
+        }
+
+        active.trigger('activate.bs.scrollspy')
+      }
+
+      ScrollSpy.prototype.clear = function () {
+        $(this.selector)
+          .parentsUntil(this.options.target, '.active')
+          .removeClass('active')
+      }
+
+
+      // SCROLLSPY PLUGIN DEFINITION
+      // ===========================
+
+      function Plugin(option) {
+        return this.each(function () {
+          var $this   = $(this)
+          var data    = $this.data('bs.scrollspy')
+          var options = typeof option == 'object' && option
+
+          if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+          if (typeof option == 'string') data[option]()
+        })
+      }
+
+      var old = $.fn.scrollspy
+
+      $.fn.scrollspy             = Plugin
+      $.fn.scrollspy.Constructor = ScrollSpy
+
+
+      // SCROLLSPY NO CONFLICT
+      // =====================
+
+      $.fn.scrollspy.noConflict = function () {
+        $.fn.scrollspy = old
+        return this
+      }
+
+
+      // SCROLLSPY DATA-API
+      // ==================
+
+      $(window).on('load.bs.scrollspy.data-api', function () {
+        $('[data-spy="scroll"]').each(function () {
+          var $spy = $(this)
+          Plugin.call($spy, $spy.data())
+        })
+      })
+
+    }(jQuery);
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('body').scrollspy({ target: '.post-toc' });
+    });
+  </script>
+{% endblock %}
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>

@@ -1,0 +1,199 @@
+.headband {
+  height: 3px;
+  background: $colorDeepBlack;
+}
+
+.header {
+  background: $headerBackgroundColor;
+  border-bottom: solid $headerBorderBottomWidth $headerBorderBottomColor;
+}
+
+.header-inner {
+  position: relative;
+}
+
+.site-meta {
+  text-align: $siteMetaTextAlignment;
+}
+
+.brand {
+  position: relative;
+  display: inline-block;
+  padding: 0 25px;
+  color: $brandTextColor;
+  background: $brandBackground
+  border-bottom: none;
+  font-family: $fontLogo;
+}
+
+.logo {
+  display: inline-block;
+  margin-right: 5px;
+  line-height: 36px;
+  vertical-align: top;
+}
+
+.site-title {
+  display: inline-block;
+  vertical-align: top;
+  line-height: 36px;
+  font-size: 20px;
+  font-weight: normal;
+}
+
+.menu {
+  margin-top: 20px;
+  padding-left: 0;
+  text-align: center;
+}
+
+.menu .menu-item {
+  display: inline-block;
+  margin-left: 20px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  a {
+    display: block;
+    color: $colorDeepBlack;
+    font-size: 13px;
+    text-decoration: none;
+    text-transform: capitalize;
+    line-height: 1.5;
+    border-bottom: 1px solid white;
+    transition-property: border-color;
+    the-transition();
+
+    &:hover {
+      border-bottom-color: $colorDeepBlack;
+    }
+  }
+}
+
+#header {
+        left: 0;
+        right: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background: #333;
+        text-align: center;
+        font-size: 12px;
+        color: #eee;
+    }
+
+    .wrap {
+        width: 100%;
+        height: 25px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .inner {
+        max-width: 990px;
+        margin: 0 auto;
+        padding: 0 15px;
+        line-height: 18px;
+        text-align: left;
+    }
+
+    .inner a {
+        border-bottom: 0;
+        color: #ffffff;
+    }
+
+    .head-title {
+        padding: 0px 20px 0px 20px;
+        font-size: 16px;
+    }
+
+    ul.nav-menu {
+        display: inline-block;
+        float: right;
+        margin: 0;
+        padding: 0;
+    }
+
+    ul.nav-menu li {
+        display: inline-block;
+        padding: 0px 10px 0px 10px;
+    }
+
+
+  /* Shutter Out Horizontal */
+  .hvr-shutter-out-horizontal {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+    background: #f5f5f5;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -webkit-transition-duration: 0.1s;
+    transition-duration: 0.1s;
+  }
+  .hvr-shutter-out-horizontal:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: $colorLightGray;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transform-origin: 50%;
+    transform-origin: 50%;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+  }
+  .hvr-shutter-out-horizontal:hover:before, .hvr-shutter-out-horizontal:focus:before, .hvr-shutter-out-horizontal:active:before {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+  }
+
+  /* Underline From Center */
+    .hvr-underline-from-center {
+      display: inline-block;
+      vertical-align: middle;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      -moz-osx-font-smoothing: grayscale;
+      position: relative;
+      overflow: hidden;
+    }
+    .hvr-underline-from-center:before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      left: 50%;
+      right: 50%;
+      bottom: 0;
+      background: #fff;
+      height: 2px;
+      -webkit-transition-property: left, right;
+      transition-property: left, right;
+      -webkit-transition-duration: 0.1s;
+      transition-duration: 0.1s;
+      -webkit-transition-timing-function: ease-out;
+      transition-timing-function: ease-out;
+    }
+    .hvr-underline-from-center:hover:before, .hvr-underline-from-center:focus:before, .hvr-underline-from-center:active:before {
+      left: 0;
+      right: 0;
+    }
